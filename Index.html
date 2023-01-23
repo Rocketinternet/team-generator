@@ -1,0 +1,189 @@
+<div class="wrapper">
+    <div class="team-container">
+        <ul id="parent-element-id">
+           
+        </ul>
+    </div>
+</div>
+<button onclick="uploadPersons()" style="padding: auto; width:100%">Personen hochladen</button>
+<div class="generate__btn-container">
+    <button class="generate__btn" onclick="generate()"><div style="font-size:30px;font-weight:700;">generate</div></button>
+</div>
+<div id="teamContainer">
+
+</div>
+<style>
+
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: sans-serif;
+    }
+    li {
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+        padding: 15 15px;
+        margin: 10 10px;
+        border-radius: 10px;
+        border: 1px dotted black;
+    }
+    li[data-active="true"] {
+        background-color: #ADD8E6;
+    }
+    input {
+        padding-left: 10px;
+    }
+    input[type="checkbox"]:checked  {
+        
+    }
+    ul {
+        display: flex;
+        flex-wrap: wrap
+    }
+    .wrapper {
+        display: flex;
+        background-color: #f0f8ff;
+        width: 100%; 
+        flex-direction: column;
+    }
+    .blue {
+        background-color: black;
+    }
+    .generate__btn {
+        padding: 10px;
+        margin: 0;
+        background: transparent;
+        color: #219ebc;
+        border: 3px solid #219ebc;
+        border-radius: 16px;
+    }
+    .generate__btn-container {
+        width: 100%;
+        display: flex;
+        padding: 20 0px;
+        justify-content: center; 
+        align-items: center;
+        background-color: lightblue;
+        height: fit-content;
+        margin-top: 20px;
+    }
+    .rotate {
+    	animation: rotate 5s infinite linear;
+    }
+	#teamContainer {
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+		font-size: 20px;
+		font-weight: 700;
+		align-items: center;
+		padding-top: 20px;
+	}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+</style>
+<script>
+
+document.addEventListener("click", (event) => {
+    if (event.target.hasAttribute('data-checkbox')) {
+        let target = event.target.parentNode;
+        if (target.getAttribute("data-active") === "true") {
+            target.setAttribute("data-active", "false");
+            target.classList.remove("rotate");
+        } else {
+        target.setAttribute("data-active", "true");
+        target.classList.add("rotate");
+        } 
+    }
+});
+
+
+
+const men = "Max, Leo, Paul, Noah, Mark, Richard".split(',');
+const women = "Lara, Paulina, Miriam, Marlene, Nele, Lili, Nasti, Leticia, Caroline, Annalena".split(',');
+const parent = document.getElementById("parent-element-id");
+
+
+women.forEach(item => {
+  let newLi = document.createElement("li");
+  let newCheckbox = document.createElement("input");
+  newCheckbox.setAttribute("type", "checkbox");
+  newCheckbox.setAttribute("data-checkbox", "");
+  newCheckbox.setAttribute("value", item);
+  newLi.appendChild(newCheckbox);
+  newLi.appendChild(document.createTextNode(item));
+  parent.appendChild(newLi);
+});
+men.forEach(item => {
+  let newLi = document.createElement("li");
+  let newCheckbox = document.createElement("input");
+  newCheckbox.setAttribute("type", "checkbox");
+  newCheckbox.setAttribute("data-checkbox", "");
+  newCheckbox.setAttribute("value", item);
+  newLi.appendChild(newCheckbox);
+  newLi.appendChild(document.createTextNode(item));
+  parent.appendChild(newLi);
+});
+
+
+let checkboxes = document.querySelectorAll("[data-checkbox]");
+
+const menActive = [];
+const womenActive = [];
+
+function uploadPersons() {
+	let activeBoxes = document.querySelectorAll("input[type='checkbox']:checked");
+	
+	activeBoxes.forEach(box => {
+		person = box.value;
+		
+		if (women.includes(person)) {
+			womenActive.push(person)
+		} else {
+			menActive.push(person)
+		}
+	})
+	console.log(womenActive)
+	console.log(menActive)
+    alert("hochgeladen")
+}
+
+function generate() {
+	if (menActive.length == 0) {
+		console.log("empty")
+		let random = Math.floor(Math.random() * womenActive.length);
+		let Mate_one = womenActive.splice(random, 1);
+		let random1 = Math.floor(Math.random() * womenActive.length);
+
+		let Mate_two = womenActive.splice(random1, 1);
+		let team = document.createElement("div")
+		team.innerHTML = Mate_one + Mate_two;
+		teamContainer.appendChild(team)
+	} else {
+		let randomW = Math.floor(Math.random() * womenActive.length);
+		let wMate = womenActive.splice(randomW, 1);
+		
+		let team = document.createElement("div")
+		
+		
+		let randomM = Math.floor(Math.random() * menActive.length);
+		let mMate = menActive.splice(randomM, 1);
+	
+		team.innerHTML = wMate + mMate;
+	
+		let teamContainer = document.getElementById("teamContainer")
+		teamContainer.appendChild(team)
+	}
+}
+
+</script>
+
