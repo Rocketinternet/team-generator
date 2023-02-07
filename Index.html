@@ -159,7 +159,7 @@ function uploadPersons() {
 
 function generate() {
 	if (menActive.length == 0) {
-		console.log("empty")
+		
 		let random = Math.floor(Math.random() * womenActive.length);
 		let Mate_one = womenActive.splice(random, 1);
 		let random1 = Math.floor(Math.random() * womenActive.length);
@@ -168,7 +168,20 @@ function generate() {
 		let team = document.createElement("div")
 		team.innerHTML = Mate_one + Mate_two;
 		teamContainer.appendChild(team)
-	} else {
+	}
+    //this is a test section
+    if (womenActive.length == 0) {
+        
+        let random = Math.floor(Math.random() * menActive.length);
+		let Mate_one = menActive.splice(random, 1);
+		let random1 = Math.floor(Math.random() * menActive.length);
+
+		let Mate_two = menActive.splice(random1, 1);
+		let team = document.createElement("div")
+		team.innerHTML = Mate_one + Mate_two;
+		teamContainer.appendChild(team)
+    }
+     else {
 		let randomW = Math.floor(Math.random() * womenActive.length);
 		let wMate = womenActive.splice(randomW, 1);
 		
